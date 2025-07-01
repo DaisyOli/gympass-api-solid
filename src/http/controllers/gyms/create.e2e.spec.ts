@@ -1,7 +1,7 @@
 import { describe, it, expect, afterAll, beforeAll } from 'vitest'
 import { app } from '@/app'
 import request from 'supertest'
-import { createAndAuthenticateUser } from '@/utils/utils/test/create-and-authenticate-user'
+import { createAndAuthenticateAdmin } from '@/utils/utils/test/create-and-authenticate-user'
 
 describe('Create Gym (e2e)', () => {
   beforeAll(async () => {
@@ -12,7 +12,7 @@ describe('Create Gym (e2e)', () => {
     await app.close()
   })
   it('should be able to create a gym', async () => {
-    const { token } = await createAndAuthenticateUser()
+    const { token } = await createAndAuthenticateAdmin()
 
     const response = await request(app.server)
       .post('/gyms')
@@ -26,14 +26,5 @@ describe('Create Gym (e2e)', () => {
       })
 
     expect(response.status).toBe(201)
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'john.doe@example.com',
-      password: '123456',
-    })
-
-    expect(authResponse.status).toBe(200)
-    expect(authResponse.body).toEqual({
-      token: expect.any(String),
-    })
   })
 })

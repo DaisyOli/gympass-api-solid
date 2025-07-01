@@ -1,5 +1,8 @@
 # App
 
+[![CI](https://github.com/daisyoli/03-api-solid/actions/workflows/ci.yml/badge.svg)](https://github.com/daisyoli/03-api-solid/actions/workflows/ci.yml)
+[![E2E Tests](https://github.com/daisyoli/03-api-solid/actions/workflows/e2e.yml/badge.svg)](https://github.com/daisyoli/03-api-solid/actions/workflows/e2e.yml)
+
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Fastify](https://img.shields.io/badge/fastify-%23000000.svg?style=for-the-badge&logo=fastify&logoColor=white)

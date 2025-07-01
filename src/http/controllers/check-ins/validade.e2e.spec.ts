@@ -1,7 +1,7 @@
 import { describe, it, expect, afterAll, beforeAll } from 'vitest'
 import { app } from '@/app'
 import request from 'supertest'
-import { createAndAuthenticateUser } from '@/utils/utils/test/create-and-authenticate-user'
+import { createAndAuthenticateAdmin } from '@/utils/utils/test/create-and-authenticate-user'
 import { prisma } from '@/lib/prisma'
 
 describe('Validate Check-in (e2e)', () => {
@@ -13,7 +13,7 @@ describe('Validate Check-in (e2e)', () => {
     await app.close()
   })
   it('should be able to validate the check-in', async () => {
-    const { token } = await createAndAuthenticateUser()
+    const { token } = await createAndAuthenticateAdmin()
 
     const gym = await prisma.gym.create({
       data: {
@@ -27,7 +27,7 @@ describe('Validate Check-in (e2e)', () => {
 
     const user = await prisma.user.findFirstOrThrow({
       where: {
-        email: 'john.doe@example.com',
+        email: 'admin@example.com',
       },
     })
 
