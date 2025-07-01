@@ -1,8 +1,6 @@
 name: E2E Tests
 
 on:
-  push:
-    branches: [ main, master, develop ]
   pull_request:
     branches: [ main, master, develop ]
 
@@ -12,18 +10,13 @@ jobs:
 
     services:
       postgres:
-        image: postgres:13
+        image: bitnami/postgresql
+        ports:
+          - 5433:5432
         env:
           POSTGRES_PASSWORD: docker
           POSTGRES_USER: docker
           POSTGRES_DB: apisolid
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     steps:
     - name: Checkout code
@@ -38,16 +31,8 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Generate Prisma Client
-      run: npx prisma generate
-
-    - name: Run database migrations
-      run: npx prisma db push
-      env:
-        DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
-
     - name: Run E2E tests
       run: npm run test:e2e
       env:
-        DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
         JWT_SECRET: "testing-secret-key" 
+        DATABASE_URL: "postgresql://docker:docker@localhost:5433/apisolid?schema=public"
